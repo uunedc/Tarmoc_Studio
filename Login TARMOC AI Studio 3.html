@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TARMOC STUDIO — Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Outfit:wght@200;400;600;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="style/login.css">
+</head>
+<body>
+
+  <!-- Ambient blobs -->
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+
+  <!-- Grid overlay -->
+  <div class="grid-overlay"></div>
+
+  <!-- Particle canvas -->
+  <canvas id="bgCanvas" aria-hidden="true"></canvas>
+
+  <!-- Toast container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Main login wrapper -->
+  <main class="login-wrapper">
+    <!-- Brand -->
+    <div class="brand">
+      <div class="brand-icon">
+        <img src="https://z-cdn-media.chatglm.cn/files/66a39a56-20a9-4a3a-b3c5-8d8178f2c276.png?auth_key=1884002952-82ce8c5d78e84144a8bf2c41fd282d33-0-e2dc834912a8dddcfeb8783ef8a30c82" alt="TARMOC STUDIO Logo">
+      </div>
+      <h1>TARMOC STUDIO</h1>
+      <p>Creative Workspace</p>
+    </div>
+
+    <!-- Login Card -->
+    <div class="login-card">
+      <h2>Selamat Datang</h2>
+      <p class="subtitle">Masuk ke akun studio kamu</p>
+
+      <form id="loginForm" novalidate autocomplete="off">
+        <!-- Username -->
+        <div class="field" id="fieldUser">
+          <label for="username">Username</label>
+          <div class="input-wrap">
+            <i class="fa-regular fa-user"></i>
+            <input
+              type="text"
+              id="username"
+              placeholder="Masukkan username"
+              spellcheck="false"
+              aria-label="Username"
+            >
+          </div>
+          <div class="error-msg"><i class="fa-solid fa-circle-exclamation"></i> <span>Username salah</span></div>
+        </div>
+
+        <!-- Password -->
+        <div class="field" id="fieldPass">
+          <label for="password">Password</label>
+          <div class="input-wrap">
+            <i class="fa-solid fa-lock"></i>
+            <input
+              type="password"
+              id="password"
+              placeholder="Masukkan password"
+              aria-label="Password"
+            >
+            <button type="button" class="toggle-pass" id="togglePass" aria-label="Tampilkan password">
+              <i class="fa-regular fa-eye"></i>
+            </button>
+          </div>
+          <div class="error-msg"><i class="fa-solid fa-circle-exclamation"></i> <span>Password salah</span></div>
+        </div>
+
+        <!-- Remember & Forgot -->
+        <div class="remember-row">
+          <label>
+            <input type="checkbox" id="rememberMe">
+            <span class="custom-check"><i class="fa-solid fa-check"></i></span>
+            Ingat saya
+          </label>
+          <a href="#" class="forgot-link" onclick="showToast('Fitur segera hadir', 'error'); return false;">Lupa password?</a>
+        </div>
+
+        <!-- Button -->
+        <button type="submit" class="btn-login" id="btnLogin">
+          <span class="btn-text">MASUK</span>
+          <span class="btn-loader"><span class="spinner"></span> Memverifikasi...</span>
+        </button>
+      </form>
+    </div>
+
+    <p class="footer-note">&copy; 2025 <span>TARMOC STUDIO</span>. All rights reserved.</p>
+  </main>
+
+  <!-- Dashboard (setelah login berhasil) -->
+  <div class="dashboard-overlay" id="dashboardOverlay">
+    <div class="dash-logo">
+      <img src="https://z-cdn-media.chatglm.cn/files/66a39a56-20a9-4a3a-b3c5-8d8178f2c276.png?auth_key=1884002952-82ce8c5d78e84144a8bf2c41fd282d33-0-e2dc834912a8dddcfeb8783ef8a30c82" alt="TARMOC STUDIO Logo">
+    </div>
+    <h2>Login Berhasil</h2>
+    <p>Selamat datang di TARMOC STUDIO</p>
+    <button class="logout-btn" id="logoutBtn"><i class="fa-solid fa-arrow-right-from-bracket"></i>&nbsp; Keluar</button>
+  </div>
+
+  <script src="script/login.js"></script>
+</body>
+</html>
