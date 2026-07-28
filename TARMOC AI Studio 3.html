@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,6 +22,7 @@
         <button class="header-hamburger" id="hamburgerBtn" aria-label="Toggle sidebar"><i data-lucide="menu"></i></button>
         <div class="header-search"><span class="search-icon"><i data-lucide="search"></i></span><input type="text" placeholder="Search projects, prompts, history..." id="globalSearch"></div>
         <div class="header-actions">
+          <button class="header-btn" id="themeToggleBtn" aria-label="Toggle theme"><i data-lucide="moon"></i></button>
           <div style="position:relative"><button class="header-btn" id="notifBtn" aria-label="Notifications"><i data-lucide="bell"></i><span class="badge" id="notifBadge">3</span></button><div class="notification-dropdown" id="notifDropdown"></div></div>
           <div class="header-credits" id="creditsBtn"><i data-lucide="zap"></i><span id="creditsCount">2,450</span></div>
           <div class="header-avatar" id="avatarBtn">JD</div>
@@ -31,7 +33,7 @@
   </div>
   <div class="toast-container" id="toastContainer"></div>
   <div id="modalContainer"></div>
-
+ 
   <script src="script/app.js"></script>
 </body>
 </html>
