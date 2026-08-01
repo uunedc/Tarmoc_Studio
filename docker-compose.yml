@@ -1,0 +1,18 @@
+services:
+  frontend:
+    build:
+      context: ./frontend
+    container_name: tarmoc-frontend
+    ports:
+      - "8080:80"
+    restart: unless-stopped
+
+  backend:
+    build:
+      context: ./tarmoc-backend
+    container_name: tarmoc-backend
+    env_file:
+      - ./tarmoc-backend/.env
+    ports:
+      - "3001:3001"
+    restart: unless-stopped
