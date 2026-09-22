@@ -1,0 +1,53 @@
+# Environment / Secrets
+.env
+.env.*
+!.env.example
+
+# Dependencies
+node_modules/
+
+# Python
+venv/
+__pycache__/
+*.pyc
+
+# Logs
+*.log
+logs/
+
+# Local database
+*.db
+*.sqlite
+*.sqlite3
+
+# OS
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
+
+# Build / cache
+dist/
+build/
+.next/
+.cache/
+
+# Temporary files
+tmp/
+temp/
+
+# Upload / generated runtime data
+uploads/
+storage/
+outputs/
+projects/
+
+# Local secrets / certificates
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Backend local data (sub-accounts, runtime JSON)
+tarmoc-backend/data/*.json

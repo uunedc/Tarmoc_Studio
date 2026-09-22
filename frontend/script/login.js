@@ -1,7 +1,8 @@
 
-    // === KREDENSIAL ===
+    // === KREDENSIAL (fallback jika backend offline) ===
     const VALID_USER = 'Tarmoc@studio';
     const VALID_PASS = 'Studio@123';
+    const API_BASE = 'http://localhost:5001';
 
     // === DOM ===
     const form = document.getElementById('loginForm');
@@ -15,8 +16,17 @@
     const logoutBtn = document.getElementById('logoutBtn');
     const AUTH_KEY = 'tarmocAuthState';
 
-    function saveAuth(user) {
-      localStorage.setItem(AUTH_KEY, JSON.stringify({ loggedIn: true, username: user, updatedAt: Date.now() }));
+    function saveAuth(user, adminToken) {
+      localStorage.setItem(AUTH_KEY, JSON.stringify({
+        loggedIn: true,
+        id: user.id,
+        name: user.name,
+        username: user.username,
+        role: user.role,
+        allowedMenus: user.allowedMenus || (user.role === 'main_admin' ? ['*'] : []),
+        adminToken: adminToken || null,
+        updatedAt: Date.now()
+      }));
     }
 
     function clearAuth() {
@@ -32,7 +42,12 @@
     }
 
     if (loadAuth()?.loggedIn) {
-      window.location.replace('./TARMOC%20AI%20Studio%203.html');
+      const auth = loadAuth();
+      if (auth.role === 'sub_admin' || (auth.role === 'main_admin' && auth.adminToken)) {
+        window.location.replace('./index.html');
+      } else {
+        clearAuth();
+      }
     }
 
     // === TOGGLE PASSWORD VISIBILITY ===
@@ -62,8 +77,25 @@
       }, 3000);
     }
 
+    async function authenticate(user, pass) {
+      try {
+        const res = await fetch(`${API_BASE}/api/auth/login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username: user, password: pass })
+        });
+        const data = await res.json();
+        if (!res.ok) {
+          return { ok: false, error: data.error || 'Login gagal.', disabled: Boolean(data.disabled) };
+        }
+        return { ok: true, user: data.user, adminToken: data.adminToken || null };
+      } catch {
+        return { ok: false, error: 'Tidak dapat terhubung ke server. Pastikan backend berjalan.' };
+      }
+    }
+
     // === FORM SUBMIT ===
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
 
       const user = usernameInput.value.trim();
@@ -87,36 +119,37 @@
       }
       if (hasError) return;
 
-      // Loading state
       btnLogin.classList.add('loading');
 
-      // Simulasi delay verifikasi
-      setTimeout(() => {
-        btnLogin.classList.remove('loading');
+      const result = await authenticate(user, pass);
+      btnLogin.classList.remove('loading');
 
-        const userOk = user === VALID_USER;
-        const passOk = pass === VALID_PASS;
-
-        if (!userOk) {
+      if (!result.ok) {
+        if (result.disabled) {
+          showToast('Account Anda dinonaktifkan. Hubungi administrator.', 'error');
+          return;
+        }
+        if (result.error === 'Username tidak terdaftar') {
           fieldUser.classList.add('error');
           fieldUser.querySelector('.error-msg span').textContent = 'Username tidak terdaftar';
           showToast('Username tidak dikenali', 'error');
           return;
         }
-        if (!passOk) {
+        if (result.error === 'Password salah') {
           fieldPass.classList.add('error');
           fieldPass.querySelector('.error-msg span').textContent = 'Password salah';
           showToast('Password tidak cocok', 'error');
           return;
         }
+        showToast(result.error || 'Login gagal', 'error');
+        return;
+      }
 
-        // Berhasil
-        saveAuth(user);
-        showToast('Autentikasi berhasil!', 'success');
-        setTimeout(() => {
-          window.location.href = './TARMOC%20AI%20Studio%203.html';
-        }, 600);
-      }, 1500);
+      saveAuth(result.user, result.adminToken);
+      showToast('Autentikasi berhasil!', 'success');
+      setTimeout(() => {
+        window.location.href = './index.html';
+      }, 600);
     });
 
     // === LOGOUT ===

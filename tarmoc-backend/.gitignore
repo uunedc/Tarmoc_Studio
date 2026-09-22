@@ -1,4 +1,11 @@
 .env
+.env.*
+!.env.example
 node_modules/
 *.log
 outputs/
+projects/
+__pycache__/
+*.pyc
+data/*.json
+.DS_Store

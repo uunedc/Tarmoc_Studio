@@ -14,5 +14,5 @@ services:
     env_file:
       - ./tarmoc-backend/.env
     ports:
-      - "3001:3001"
+      - "5001:5001"
     restart: unless-stopped

@@ -1,25 +1,39 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TARMOC AI Studio</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <title>TARMOC Studio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Nunito:wght@800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style/app.css">
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script>
+    (function() {
+      try {
+        const auth = JSON.parse(localStorage.getItem('tarmocAuthState'));
+        if (!auth || !auth.loggedIn) {
+          window.location.replace('./login.html');
+        }
+      } catch {
+        window.location.replace('./login.html');
+      }
+    })();
+  </script>
 </head>
 <body>
   <div class="sidebar-overlay" id="sidebarOverlay"></div>
   <div class="app-layout">
     <aside class="sidebar" id="sidebar">
-      <div class="sidebar-header"><div class="sidebar-logo"><img src="https://z-cdn-media.chatglm.cn/files/50b1b945-6331-4359-8843-2f9e85ba2565.png?auth_key=1883962976-b26aa67e6851416f9d61e71085cb2e0d-0-06620aea71ad2414381b827a258e5835" alt="TARMOC" class="sidebar-logo-img"><div class="sidebar-logo-text"><span class="brand">TARMOC</span><span class="sub">AI Studio</span></div></div></div>
+      <div class="sidebar-header">
+        <div class="sidebar-logo"><img src="https://z-cdn-media.chatglm.cn/files/50b1b945-6331-4359-8843-2f9e85ba2565.png?auth_key=1883962976-b26aa67e6851416f9d61e71085cb2e0d-0-06620aea71ad2414381b827a258e5835" alt="TARMOC" class="sidebar-logo-img"><div class="sidebar-logo-text"><span class="brand">TARMOC</span><span class="sub"><span class="sub-deco" aria-hidden="true">~</span> STUDIO <span class="sub-deco" aria-hidden="true">~</span></span></div></div>
+        <button type="button" class="sidebar-collapse-btn" id="sidebarCollapseBtn" aria-label="Collapse sidebar"><i data-lucide="panel-left-close"></i></button>
+      </div>
       <nav class="sidebar-nav" id="sidebarNav"></nav>
-      <div class="sidebar-workspace" id="sidebarWorkspace"></div>
     </aside>
     <div class="main-area">
       <header class="header" id="appHeader">
-        <button class="header-hamburger" id="hamburgerBtn" aria-label="Toggle sidebar"><i data-lucide="menu"></i></button>
+        <button type="button" class="header-hamburger" id="hamburgerBtn" aria-label="Open menu"><i data-lucide="menu"></i></button>
+        <div class="header-brand" aria-hidden="true"><span class="header-brand-title">TARMOC</span><span class="header-brand-sub"><span class="sub-deco" aria-hidden="true">~</span> STUDIO <span class="sub-deco" aria-hidden="true">~</span></span></div>
         <div class="header-search"><span class="search-icon"><i data-lucide="search"></i></span><input type="text" placeholder="Search projects, prompts, history..." id="globalSearch"></div>
         <div class="header-actions">
           <button class="header-btn" id="themeToggleBtn" aria-label="Toggle theme"><i data-lucide="moon"></i></button>
